@@ -13,11 +13,14 @@ import android.util.Log;
 
 import com.example.licht.idcardtestss.R;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import dalvik.system.DexClassLoader;
 import okio.BufferedSource;
 import okio.Okio;
 import okio.Source;
@@ -75,7 +78,7 @@ public class PluginActivity extends AppCompatActivity {
 
         }
 
-        Resources pluginResource = getPluginResource(getFileStreamPath("plugin1.apk");
+//        Resources pluginResource = getPluginResource(getFileStreamPath("plugin1.apk"));
     }
 
 //    public void addAssetPath(Context context, String apkName){
@@ -145,10 +148,9 @@ public class PluginActivity extends AppCompatActivity {
         Class<?> clazz = dexClassLoader.loadClass(apkPackageName + ".R$mipmap");//通过使用apk自己的类加载器，反射出R类中相应的内部类进而获取我们需要的资源id
         Field field = clazz.getDeclaredField("one");//得到名为one的这张图片字段
         int resId = field.getInt(R.id.class);//得到图片id
-        Resources mResources = getPluginResources(apkName);//得到插件apk中的Resource
+        Resources mResources = getPluginResource(apkName);//得到插件apk中的Resource
         if (mResources != null) {
             //通过插件apk中的Resource得到resId对应的资源
-            findViewById(R.id.background).setBackgroundDrawable(mResources.getDrawable(resId));
         }
     }
 
