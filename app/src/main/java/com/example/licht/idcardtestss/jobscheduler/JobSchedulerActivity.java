@@ -52,10 +52,10 @@ public class JobSchedulerActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Intent intent = new Intent(this, TTJobService.class);
-        Messenger messenger = new Messenger(messageHandler);
-        intent.putExtra(MESSAGE_INTENT_KEY,messenger);
-        startService(intent);
+//        Intent intent = new Intent(this, TTJobService.class);
+//        Messenger messenger = new Messenger(messageHandler);
+//        intent.putExtra(MESSAGE_INTENT_KEY,messenger);
+//        startService(intent);
 
 
     }
@@ -143,4 +143,6 @@ public class JobSchedulerActivity extends AppCompatActivity {
 
         }
     }
+
+
 }

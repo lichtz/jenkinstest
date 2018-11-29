@@ -37,12 +37,12 @@ public class TTJobService extends JobService
     }
 
     @Override
-    public boolean onStartJob(JobParameters params) {
+    public boolean onStartJob(final JobParameters params) {
         final String cc = "开始任务啦：：：";
 
         Log.i("zyl:onStartJob","onStartJob");
         String kaka = (String) params.getExtras().get("KAKA");
-        Log.i("zyl",kaka);
+        Log.i("zyl:onStart",kaka);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -53,7 +53,16 @@ public class TTJobService extends JobService
                 message.obj= cc+ SystemClock.currentThreadTimeMillis();
 
                 try {
-                    mJobActivityMessenger.send(message);
+                    if (mJobActivityMessenger != null) {
+                        mJobActivityMessenger.send(message);
+                    }
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            jobFinished(params,false);
+                        }
+                    }).start();
+
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -66,15 +75,26 @@ public class TTJobService extends JobService
     @Override
     public boolean onStopJob(JobParameters params) {
         Log.i("zyl:onStopJob","onStopJob");
+        String kaka = (String) params.getExtras().get("KAKA");
+        Log.i("zyl:stop",kaka+"STOP");
         Message obtain = Message.obtain();
         obtain.what=1;
         obtain.obj ="stop";
 
         try {
-            mJobActivityMessenger.send(obtain);
+            if (mJobActivityMessenger != null) {
+                mJobActivityMessenger.send(obtain);
+            }
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+        stopSelf();
         return false;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i("zyl","destroy");
     }
 }
