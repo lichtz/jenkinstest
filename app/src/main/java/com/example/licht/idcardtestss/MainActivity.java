@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -70,6 +72,14 @@ public class MainActivity extends Activity {
             Log .i("zyl",path);
             // 监听到事件，做一些过滤去重处理操作
         }
+    }
+
+    private void jobSch(){
+//        JobScheduler systemService = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+//        JobInfo jobInfo = new JobInfo();
+//        systemService.schedule();
+//
+
     }
 
 
